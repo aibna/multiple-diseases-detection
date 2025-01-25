@@ -5,6 +5,14 @@ from fastapi.middleware.cors import CORSMiddleware  # Import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
 import joblib
+from mangum import Mangum
+
+#Create a FastAPI app instance
+app = FastAPI()
+@app.get("/")
+def read_root():
+    return{"message":"Hello,Vercell"}
+handler=Mangum(app)
 
 # Load the dataset
 file_path = 'general/Disease_symptom_and_patient_profile_dataset.csv'  # Update the path if necessary
@@ -69,8 +77,7 @@ app = FastAPI()
 
 # Add CORSMiddleware to the app
 origins = [
-    "http://localhost",  # Allow frontend from localhost
-    "http://localhost:5173",  # Allow frontend from localhost with a specific port
+     "https://multiple-diseases-detection.vercel.app/",
     "*",  # Allow all origins (be cautious with this in production)
 ]
 
